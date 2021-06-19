@@ -2,10 +2,10 @@ import React from 'react';
 import './Main.css';
 
 import Header from "../Header/Header";
-import Hero from "../Hero/Hero";
-import NavTab from "../NavTab/NavTab";
 import Promo from "../Promo/Promo";
+import NavTab from "../NavTab/NavTab";
 import Techs from "../Techs/Techs";
+import AboutProject from "../AboutProject/AboutProject";
 
 function Main(props) {
   const { isLogin } = props;
@@ -14,9 +14,9 @@ function Main(props) {
   return (
     <div className="container">
       <Header cssStyle={(isLogin)?'header_is-login':''}/>
-      <Hero />
-      <NavTab />
       <Promo />
+      <NavTab />
+      <AboutProject />
       <Techs />
 
 
