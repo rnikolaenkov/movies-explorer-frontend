@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import Hero from "../Hero/Hero";
 import NavTab from "../NavTab/NavTab";
 import Promo from "../Promo/Promo";
+import Techs from "../Techs/Techs";
 
 function Main(props) {
   const { isLogin } = props;
@@ -13,30 +14,14 @@ function Main(props) {
   return (
     <div className="container">
       <Header cssStyle={(isLogin)?'header_is-login':''}/>
-
       <Hero />
-
       <NavTab />
-
       <Promo />
+      <Techs />
 
 
 
 
-      <section className="tech section tech__wrap">
-        <h2 className="section__title">Технологии</h2>
-        <h3 className="tech__subtitle">7 технологий</h3>
-        <p className="tech__text">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
-        <ul className="section__tech tech-list">
-          <li className="tech-list__item">HTML</li>
-          <li className="tech-list__item">CSS</li>
-          <li className="tech-list__item">JS</li>
-          <li className="tech-list__item">React</li>
-          <li className="tech-list__item">Git</li>
-          <li className="tech-list__item">Express.js</li>
-          <li className="tech-list__item">mongoDB</li>
-        </ul>
-      </section>
 
       <section className="student section">
         <h2 className="section__title">Студент</h2>
