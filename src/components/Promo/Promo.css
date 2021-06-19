@@ -4,6 +4,7 @@
     width: 100%;
     height: 570px;
     background: url('../../images/landing-logo.png') #073042 no-repeat center 138px;
+    box-sizing: border-box;
 }
 
 .promo__title {

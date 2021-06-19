@@ -34,22 +34,3 @@
         padding-right: 70px;
     }
 }
-
-
-
-/*.header {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-/*    */
-/*    box-sizing: border-box;*/
-/*    background: #073042;*/
-/*    height: 77px;*/
-/*}*/
-/*.header__logo-link {*/
-/*    transition: 0.5s;*/
-/*}*/
-
-/*.header__logo-link:hover {*/
-/*    opacity: 0.5;*/
-/*}*/
