@@ -35,7 +35,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
     .hero {
         height: 524px;
         background: url('../../images/landing-logo_768.png') #073042 no-repeat center 79px;

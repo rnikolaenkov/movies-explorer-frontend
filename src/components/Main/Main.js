@@ -3,6 +3,8 @@ import './Main.css';
 
 import Header from "../Header/Header";
 import Hero from "../Hero/Hero";
+import NavTab from "../NavTab/NavTab";
+import Promo from "../Promo/Promo";
 
 function Main(props) {
   const { isLogin } = props;
@@ -14,43 +16,12 @@ function Main(props) {
 
       <Hero />
 
-      <section className="menu">
-        <ul className="menu__list">
-          <li className="menu__list-item"><a href="#" className="menu__list-link">О проекте</a></li>
-          <li className="menu__list-item"><a href="#" className="menu__list-link">Технологии</a></li>
-          <li className="menu__list-item"><a href="#" className="menu__list-link">Студент</a></li>
-        </ul>
-      </section>
+      <NavTab />
 
-      <section className="about section">
-        <h2 className="section__title">О проекте</h2>
-        <div className="section__wrap">
-          <div className="section__wrap-item">
-            <h3 className="section__subtitle">Дипломный проект включал 5 этапов</h3>
-            <p className="section__text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и
-              финальные доработки.</p>
-          </div>
-          <div className="section__wrap-item">
-            <h3 className="section__subtitle">На выполнение диплома ушло 5 недель</h3>
-            <p className="section__text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы
-              успешно защититься.</p>
-          </div>
-        </div>
-        <div className="timeline section__timeline">
-          <div className="timeline__left">
-            <div className="timeline__block-text timeline__block timeline__block_theme_backend">
-              1 неделя
-            </div>
-            <span className="timeline__description">Back-end</span>
-          </div>
-          <div className="timeline__right">
-            <div className="timeline__block-text timeline__block timeline__block_theme_frontend">
-              4 недели
-            </div>
-            <span className="timeline__description">Front-end</span>
-          </div>
-        </div>
-      </section>
+      <Promo />
+
+
+
 
       <section className="tech section tech__wrap">
         <h2 className="section__title">Технологии</h2>
