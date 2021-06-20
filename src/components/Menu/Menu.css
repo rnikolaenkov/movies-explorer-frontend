@@ -1,17 +1,18 @@
-.menu {
+.menu-burger {
     display: block;
-    text-decoration: none;
+    width: 40px;
+    height: 43px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
-.menu:hover {
+.menu-burger:hover {
     opacity: 0.5;
 }
 
-.menu__text {
-    display: none;
-}
-
-.menu__span {
+.menu-burger__span {
     display: block;
     width: 22px;
     height: 2px;
@@ -19,7 +20,7 @@
     position: relative;
 }
 
-.menu__span:before {
+.menu-burger__span:before {
     content: "";
     display: block;
     width: 22px;
@@ -29,7 +30,7 @@
     transform: translateY(9px);
 }
 
-.menu__span:after {
+.menu-burger__span:after {
     content: "";
     display: block;
     width: 22px;
@@ -39,19 +40,27 @@
     transform: translateY(-9px);
 }
 
+.menu {
+    display: none;
+}
+
 @media (min-width: 768px) {
-    .menu__span {
+    .menu-burger {
+        width: 44px;
+        height: 44px;
+    }
+    .menu-burger__span {
         width: 28px;
         height: 3px;
     }
 
-    .menu__span:before {
+    .menu-burger__span:before {
         width: 28px;
         height: 3px;
         transform: translateY(9px);
     }
 
-    .menu__span:after {
+    .menu-burger__span:after {
         width: 28px;
         height: 3px;
         transform: translateY(-11px);
@@ -59,21 +68,67 @@
 }
 
 @media (min-width: 1280px) {
-    .menu__span {
+    .menu-burger {
         display: none;
+    }
+
+    .menu {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        list-style: none;
+        margin: 0 0 0 44px;
+        padding: 0;
+    }
+
+    .menu__item {
+        margin-right: 16px;
+    }
+
+    .menu__item:last-child {
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .menu__link {
+        text-decoration: none;
+        font-family: Inter, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 18px;
+        text-overflow: ellipsis;
+        color: #fff;
+        transition: 0.5s;
+    }
+
+    .header_theme_white .menu__link {
+        color: #000;
+    }
+
+    .menu__link:hover {
+        opacity: 0.5;
+    }
+
+    .menu__link_current {
+        font-weight: 500;
     }
 
     .menu__text {
         display: block;
+        box-sizing: border-box;
         padding: 8px 20px;
+        color: #000;
         background: #F9F9F9;
         border-radius: 20px;
-        font-family: Inter, Arial, Helvetica, sans-serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        text-overflow: ellipsis;
-        color: #000000;
+        transition: 0.5s;
+    }
+
+    .menu__text:hover {
+        opacity: 0.5;
+    }
+
+    .menu__text:focus {
+        outline: 1px solid #2BE080;
     }
 }

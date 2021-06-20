@@ -120,7 +120,7 @@
 .auth__link {
     margin-left: 10px;
     text-decoration: none;
-    font-family: Inter;
+    font-family: Inter, Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;

@@ -1,25 +1,43 @@
-import React from "react";
+import React, {useState} from "react";
 import './Profile.css';
 import Header from "../Header/Header";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
 
-function Profile() {
+function Profile(props) {
+  const { isLogin, showModalMenu } = props;
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  }
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+
   return(
     <div className="container">
-      <Header cssStyle="header_is-login"/>
+      <Header
+        styles = 'header_theme_white'
+        isLogin = {isLogin}
+        showModalMenu = { showModalMenu }
+      />
 
       <div className="profile">
         <form action="#" className="profile__form">
           <h2 className="profile__title">Привет, Виталий!</h2>
           <div className="profile__group-wrap">
             <label htmlFor="name" className="profile__label">Имя</label>
-            <input type="text" className="profile__input" value="Виталий" id="name" />
+            <input type="text" className="profile__input" value={name} id="name" onChange={handleChangeName}/>
           </div>
           <ErrorLabel message="Что-то пошло не так" />
 
           <div className="profile__group-wrap">
             <label htmlFor="email" className="profile__label">Email</label>
-            <input type="email" className="profile__input" value="vitaliy@mail.loc" id="email" />
+            <input type="email" className="profile__input" value={email} id="email" onChange={handleChangeEmail}/>
           </div>
           <ErrorLabel message="Что-то пошло не так" />
 

@@ -11,12 +11,15 @@ import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
 function Main(props) {
-  const { isLogin } = props;
-
+  const { isLogin, showModalMenu } = props;
 
   return (
     <div className="container">
-      <Header cssStyle={(isLogin)?'header_is-login':''}/>
+      <Header
+        styles = ''
+        isLogin = {isLogin}
+        showModalMenu = { showModalMenu }
+      />
       <Promo />
       <NavTab />
       <AboutProject />

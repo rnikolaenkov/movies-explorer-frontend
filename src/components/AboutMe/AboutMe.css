@@ -166,7 +166,7 @@
 
 
     .about-me__wrap {
-        width: 1240px;
+        width: 100%;
     }
 
     .about-me__wrap-item:first-child {
