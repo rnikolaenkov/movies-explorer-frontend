@@ -6,7 +6,7 @@ function Logo(props) {
   const { cssClass } = props;
   const newClass = `${cssClass} logo`;
   return (
-    <img src={logo} className={ newClass }/>
+    <img src={logo} className={ newClass } alt="Диплом"/>
   )
 }
 

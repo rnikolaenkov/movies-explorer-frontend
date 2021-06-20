@@ -43,6 +43,7 @@
     font-size: 12px;
     line-height: 15px;
     color: #000000;
+    text-overflow: ellipsis;
     text-decoration: none;
     transition: 0.5s;
 }

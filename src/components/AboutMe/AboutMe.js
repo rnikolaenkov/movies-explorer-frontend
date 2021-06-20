@@ -4,7 +4,7 @@ import photo from '../../images/photo_320.png';
 
 function AboutMe() {
   return (
-    <section className="about-me">
+    <section className="about-me" id="aboutMe">
       <h2 className="about-me__title">Студент</h2>
       <div className="about-me__wrap">
         <div className="about-me__wrap-item about-me__wrap-item_photo">
@@ -18,8 +18,8 @@ function AboutMe() {
             компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл
             с постоянной работы.</p>
           <ul className="about-me__social">
-            <li className="about-me__social-item"><a href="#" className="about-me__social-link">Facebook</a></li>
-            <li className="about-me__social-item"><a href="#" className="about-me__social-link">Github</a></li>
+            <li className="about-me__social-item"><a href="https://www.facebook.com/rnikolaenkov" className="about-me__social-link focus" target="_blank" rel="noreferrer">Facebook</a></li>
+            <li className="about-me__social-item"><a href="https://github.com/rnikolaenkov" className="about-me__social-link focus" target="_blank" rel="noreferrer">Github</a></li>
           </ul>
         </div>
       </div>

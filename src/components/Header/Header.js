@@ -3,6 +3,7 @@ import './Header.css';
 import Logo from "../Logo/Logo";
 import {Link} from "react-router-dom";
 import MenuAuth from "../MenuAuth/MenuAuth";
+import Menu from "../Menu/Menu";
 
 
 function Header(props) {
@@ -11,7 +12,7 @@ function Header(props) {
   return (
     <header className={newStyle}>
       <div className="header__left-block">
-        <Link to="/" className="header__logo-link">
+        <Link to="/" className="header__logo-link focus">
           <Logo cssClass='' />
         </Link>
 
@@ -22,7 +23,8 @@ function Header(props) {
 
       </div>
       <div className="header__right-block">
-        <MenuAuth />
+        {/*<MenuAuth />*/}
+        <Menu />
       </div>
     </header>
   )
