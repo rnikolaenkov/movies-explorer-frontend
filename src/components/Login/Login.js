@@ -1,21 +1,16 @@
 import React from "react";
-import './Register.css';
-import AuthForm from "../AuthForm/AuthForm";
+import './Login.css';
+import {Link} from "react-router-dom";
 import Logo from "../Logo/Logo";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
-import {Link} from "react-router-dom";
+import AuthForm from "../AuthForm/AuthForm";
 
-function Register() {
-  return (
+function Login() {
+  return(
     <AuthForm>
       <Link to="/" className="focus"><Logo /></Link>
       <form action="#" className="auth__form">
-        <h2 className="auth__title">Добро пожаловать!</h2>
-        <div className="auth__group-wrap">
-          <label htmlFor="name" className="auth__label">Имя</label>
-          <input type="text" className="auth__input" value="Виталий" id="name" />
-        </div>
-        <ErrorLabel message="Что-то пошло не так" />
+        <h2 className="auth__title">Рады видеть!</h2>
 
         <div className="auth__group-wrap">
           <label htmlFor="email" className="auth__label">Email</label>
@@ -32,14 +27,14 @@ function Register() {
       </form>
       <ul className="auth__nav">
         <li className="auth__nav-item">
-          <button className="auth__btn">Зарегистрироваться</button>
+          <button className="auth__btn">Войти</button>
         </li>
         <li className="auth__nav-item">
-          <span className="auth__text">Уже зарегистрированы?<Link to="/signin" className="auth__link focus">Войти</Link></span>
+          <span className="auth__text">Ещё не зарегистрированы?<Link to="/signup" className="auth__link focus">Регистрация</Link></span>
         </li>
       </ul>
     </AuthForm>
   );
 }
 
-export default Register;
+export default Login;

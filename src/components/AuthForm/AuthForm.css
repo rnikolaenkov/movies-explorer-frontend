@@ -38,6 +38,7 @@
 .auth__input {
     width: 100%;
     height: 46px;
+    margin-top: 10px;
     box-sizing: border-box;
     padding: 15px;
     font-family: Inter, Arial, Helvetica, sans-serif;
@@ -130,5 +131,36 @@
 
 .auth__link:hover {
     opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+    .auth {
+        width: 410px;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .auth__form {
+        width: 100%;
+    }
+
+    .auth__nav{
+        margin-top: 179px;
+    }
+
+    .auth__btn {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .auth__text {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .auth__link {
+        font-size: 14px;
+        line-height: 17px;
+    }
 }
 
