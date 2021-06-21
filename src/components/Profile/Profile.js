@@ -31,13 +31,13 @@ function Profile(props) {
           <h2 className="profile__title">Привет, Виталий!</h2>
           <div className="profile__group-wrap">
             <label htmlFor="name" className="profile__label">Имя</label>
-            <input type="text" className="profile__input" value={name} id="name" onChange={handleChangeName}/>
+            <input type="text" className="profile__input" value={name} id="name" onChange={handleChangeName} placeholder="Имя"/>
           </div>
           <ErrorLabel message="Что-то пошло не так" />
 
           <div className="profile__group-wrap">
             <label htmlFor="email" className="profile__label">Email</label>
-            <input type="email" className="profile__input" value={email} id="email" onChange={handleChangeEmail}/>
+            <input type="email" className="profile__input" value={email} id="email" onChange={handleChangeEmail} placeholder="Email"/>
           </div>
           <ErrorLabel message="Что-то пошло не так" />
 

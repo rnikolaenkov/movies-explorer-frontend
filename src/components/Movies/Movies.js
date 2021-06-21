@@ -3,6 +3,7 @@ import './Movies.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Movie from "../Movie/Movie";
+import Preloader from "../Preloader/Preloader";
 
 function Movies(props) {
   const { isLogin, showModalMenu } = props;
@@ -28,6 +29,7 @@ function Movies(props) {
       </div>
 
       <div className="movie__wrap">
+        {/*<Preloader />*/}
         <div className="card-list">
           <Movie />
           <Movie />

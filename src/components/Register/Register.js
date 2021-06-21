@@ -13,19 +13,19 @@ function Register() {
         <h2 className="auth__title">Добро пожаловать!</h2>
         <div className="auth__group-wrap">
           <label htmlFor="name" className="auth__label">Имя</label>
-          <input type="text" className="auth__input" value="Виталий" id="name" />
+          <input type="text" className="auth__input" value="" id="name" placeholder="Имя" />
         </div>
         <ErrorLabel message="Что-то пошло не так" />
 
         <div className="auth__group-wrap">
           <label htmlFor="email" className="auth__label">Email</label>
-          <input type="email" className="auth__input" value="vitaliy@mail.loc" id="email" />
+          <input type="email" className="auth__input" value="" id="email" placeholder="Email" />
         </div>
         <ErrorLabel message="Что-то пошло не так" />
 
         <div className="auth__group-wrap">
           <label htmlFor="password" className="auth__label">Пароль</label>
-          <input type="password" className="auth__input" id="password" />
+          <input type="password" className="auth__input" id="password" placeholder="Пароль" />
         </div>
         <ErrorLabel message="Что-то пошло не так" />
 
