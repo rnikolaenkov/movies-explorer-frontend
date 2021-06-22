@@ -1,7 +1,7 @@
 import {apiConfig} from "./config";
 
 function getMovies() {
-  return fetch(apiConfig.externalUrl)
+  return fetch(apiConfig.externalApi)
     .then((res) => {
       if(res.ok) {
         const result = res.json();

@@ -11,15 +11,13 @@ function Movies(props) {
   const { isLogin, showModalMenu } = props;
   const [isLoaded, setIsLodaded] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [movieList, setMovieList] = useState(localStorage.getItem('movies') || []);
+  const [movieList, setMovieList] = useState(JSON.parse(localStorage.getItem('movies')) || []);
 
   useEffect(() => {
     if (movieList.length === 0) {
-      console.log('uuuu');
       const movies = [];
       getMovies().then((res) => {
-        console.log(res);
-        localStorage.setItem('movies', res);
+        localStorage.setItem('movies', JSON.stringify(res));
         setMovieList(res);
         setIsLodaded(true);
       }).catch((err) => {
@@ -32,6 +30,14 @@ function Movies(props) {
     }
   },[])
 
+  const renderMovies = (movieList) => {
+    if (movieList.length !== 0) {
+      return movieList.map((movie) => (<Movie movie={movie} key={movie.id}/>));
+    } else {
+      return <ErrorMsg message="Ничего не найдено" />
+    }
+  }
+
   const showMovies = (isLoaded, isError) => {
     if (isLoaded) {
       if (isError) {
@@ -39,18 +45,7 @@ function Movies(props) {
       } else {
         return <>
           <div className="card-list">
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
-            <Movie />
+            { renderMovies(movieList) }
           </div>
           <button className="movie__more">Еще</button>
         </>;

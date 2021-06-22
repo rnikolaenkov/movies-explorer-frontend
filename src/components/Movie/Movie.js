@@ -4,20 +4,22 @@ import movie from '../../images/movie_1.jpg'
 import BtnSaved from "../BtnSaved/BtnSaved";
 import BtnSave from "../BtnSave/BtnSave";
 import BtnRemove from "../BtnRemove/BtnRemove";
+import {apiConfig} from "../../utils/config";
 
-function Movie() {
+function Movie(props) {
+  const { movie } = props;
   return (
     <article className="card">
-      <a href='http://youtube.com' className="card__link" target="_blank" rel="noreferrer">
-        <img className="card__img" src={movie} alt="Название фильма" />
+      <a href={movie.trailerLink} className="card__link" target="_blank" rel="noreferrer">
+        <img className="card__img" src={`${apiConfig.externalUrl}${movie.image.url}`} alt={movie.nameRU} />
         {/*<BtnSaved />*/}
         {/*<BtnSave />*/}
         <BtnRemove />
       </a>
 
       <div className="card__info">
-        <div className="card__title">33 слова о дизайне</div>
-        <div className="card__duration">1ч 17м</div>
+        <div className="card__title">{movie.nameRU}</div>
+        <div className="card__duration">{movie.duration} м.</div>
       </div>
     </article>
   )

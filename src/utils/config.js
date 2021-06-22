@@ -1,3 +1,4 @@
 export const apiConfig = {
-  externalUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+  externalUrl: 'https://api.nomoreparties.co',
+  externalApi: 'https://api.nomoreparties.co/beatfilm-movies',
 }
