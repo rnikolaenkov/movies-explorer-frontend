@@ -1,0 +1,24 @@
+.card__saved {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    width: 21px;
+    height: 21px;
+    background: url("../../images/remove.svg") no-repeat center center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.card__saved:hover{
+    opacity: 0.5;
+}
+
+@media (min-width: 1280px) {
+    .card__saved {
+        top: 14px;
+        right: 14px;
+    }
+}
+

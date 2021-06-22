@@ -1,0 +1,116 @@
+.footer {
+    box-sizing: border-box;
+    padding: 82px 10px 0px;
+}
+
+.footer__title {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #A0A0A0;
+    text-overflow: ellipsis;
+    margin: 0;
+    text-align: center;
+
+    padding-bottom: 21px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.footer__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer__social-list {
+    list-style: none;
+    padding: 0;
+}
+
+.footer__social-item {
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+}
+
+.footer__social-link {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.footer__social-link:hover {
+    opacity: 0.5;
+}
+
+.footer__copy {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #A0A0A0;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        padding: 151px 24px 0px;
+    }
+
+    .footer__title {
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .footer__wrap {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .footer__social-list {
+        display: flex;
+    }
+
+    .footer__social-item {
+        margin-top: 4px;
+        margin-right: 20px;
+    }
+
+    .footer__social-item:last-child {
+        margin-right: 0;
+    }
+
+    .footer__social-link {
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .footer__copy {
+        font-size: 13px;
+        line-height: 16px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .footer {
+        padding: 132px 24px 0px;
+    }
+
+    .footer__social-item:last-child {
+        margin-right: 46px;
+    }
+
+    .footer__copy {
+        font-size: 13px;
+        line-height: 16px;
+        margin-left: 46px;
+    }
+}

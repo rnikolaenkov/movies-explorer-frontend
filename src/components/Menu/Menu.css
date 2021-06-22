@@ -1,0 +1,134 @@
+.menu-burger {
+    display: block;
+    width: 40px;
+    height: 43px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.menu-burger:hover {
+    opacity: 0.5;
+}
+
+.menu-burger__span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #000000;
+    position: relative;
+}
+
+.menu-burger__span:before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #000000;
+    position: absolute;
+    transform: translateY(9px);
+}
+
+.menu-burger__span:after {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #000000;
+    position: absolute;
+    transform: translateY(-9px);
+}
+
+.menu {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .menu-burger {
+        width: 44px;
+        height: 44px;
+    }
+    .menu-burger__span {
+        width: 28px;
+        height: 3px;
+    }
+
+    .menu-burger__span:before {
+        width: 28px;
+        height: 3px;
+        transform: translateY(9px);
+    }
+
+    .menu-burger__span:after {
+        width: 28px;
+        height: 3px;
+        transform: translateY(-11px);
+    }
+}
+
+@media (min-width: 1280px) {
+    .menu-burger {
+        display: none;
+    }
+
+    .menu {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        list-style: none;
+        margin: 0 0 0 44px;
+        padding: 0;
+    }
+
+    .menu__item {
+        margin-right: 16px;
+    }
+
+    .menu__item:last-child {
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .menu__link {
+        text-decoration: none;
+        font-family: Inter, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 18px;
+        text-overflow: ellipsis;
+        color: #fff;
+        transition: 0.5s;
+    }
+
+    .header_theme_white .menu__link {
+        color: #000;
+    }
+
+    .menu__link:hover {
+        opacity: 0.5;
+    }
+
+    .menu__link_current {
+        font-weight: 500;
+    }
+
+    .menu__text {
+        display: block;
+        box-sizing: border-box;
+        padding: 8px 20px;
+        color: #000;
+        background: #F9F9F9;
+        border-radius: 20px;
+        transition: 0.5s;
+    }
+
+    .menu__text:hover {
+        opacity: 0.5;
+    }
+
+    .menu__text:focus {
+        outline: 1px solid #2BE080;
+    }
+}

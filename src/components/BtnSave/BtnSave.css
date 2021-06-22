@@ -1,0 +1,29 @@
+.btn__save {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: #F9F9F9;
+    border-radius: 30px;
+    box-sizing: border-box;
+    padding: 6px 7px;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 9px;
+    color: #000000;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn__save:hover{
+    opacity: 0.5;
+}
+
+@media (min-width: 1280px) {
+    .btn__save {
+        top: 14px;
+        right: 14px;
+    }
+}
