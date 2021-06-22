@@ -1,0 +1,12 @@
+.error-msg {
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    text-overflow: ellipsis;
+    color: #FF3055;
+}
