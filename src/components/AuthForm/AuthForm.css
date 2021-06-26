@@ -33,6 +33,7 @@
     line-height: 12px;
     text-overflow: ellipsis;
     color: #A0A0A0;
+    margin-top: 10px;
 }
 
 .auth__input {

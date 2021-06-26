@@ -15,7 +15,7 @@ import {CurrentUserContext} from './contexts/CurrentUserContext';
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [isOpenModalMenu, setIsOpenModalMenu] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
 
