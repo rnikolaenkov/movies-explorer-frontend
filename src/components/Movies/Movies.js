@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import './Movies.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -9,36 +9,63 @@ import ErrorMsg from "../ErrorMsg/ErrorMsg";
 
 function Movies(props) {
   const { isLogin, showModalMenu } = props;
-  const [isLoaded, setIsLodaded] = useState(false);
+
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
   const [movieList, setMovieList] = useState(JSON.parse(localStorage.getItem('movies')) || []);
 
+  const [query, setQuery] = useState('');
+
+  const [queryString, setQueryString] = useState('');
+  const [, setCount] = useState(3);
+  const [, setTotal] = useState(0);
+
+  const [searchMovieList, setSearchMovieList] = useState([]);
+
   useEffect(() => {
     if (movieList.length === 0) {
-      const movies = [];
       getMovies().then((res) => {
         localStorage.setItem('movies', JSON.stringify(res));
         setMovieList(res);
-        setIsLodaded(true);
+        setIsLoaded(true);
       }).catch((err) => {
         console.log(err );
-        setIsLodaded(true);
+        setIsLoaded(true);
         setIsError(true);
-      })
+      });
     } else {
-      setIsLodaded(true);
+      setIsLoaded(true);
     }
-  },[])
+    setTotal(movieList.length);
+    // showMovies(movieList, isLoaded, isError);
+  }, []);
+
+
+  // useEffect(() => {
+  //   console.log('use effect');
+  //   return showMovies(movieList, isLoaded, isError);
+  // //   // showMovies(movieList, isLoaded, isError);
+  // },[setQuery,query]);
 
   const renderMovies = (movieList) => {
+    // console.log('render movies', query);
+    // const queryString = searchString;
+
     if (movieList.length !== 0) {
-      return movieList.map((movie) => (<Movie movie={movie} key={movie.id}/>));
+      return movieList.map((movie) => {
+
+        if (movie['nameRU'].indexOf(query) !== -1) {
+          
+          return <Movie movie={movie} />
+        }
+      });
     } else {
       return <ErrorMsg message="Ничего не найдено" />
     }
-  }
+  };
 
-  const showMovies = (isLoaded, isError) => {
+  const showMovies = (movieList, isLoaded, isError) => {
+    console.log('123', isLoaded);
     if (isLoaded) {
       if (isError) {
         return <ErrorMsg message="Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" />;
@@ -50,11 +77,53 @@ function Movies(props) {
           <button className="movie__more">Еще</button>
         </>;
       }
-
     } else {
       return <Preloader />;
     }
   }
+
+  // const onSubmit = (e) => {
+  //   console.log(searchString)
+  //   e.preventDefault();
+  //   // renderMovies(movieList);
+  //   showMovies(isLoaded, isError);
+  // };
+
+
+
+
+
+  // const showMovies = (isLoaded, isError) => {
+  //   if (isLoaded) {
+  //     if (isError) {
+  //       return <ErrorMsg message="Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" />;
+  //     } else {
+  //       return <>
+  //         <div className="card-list">
+  //           { renderMovies(movieList) }
+  //         </div>
+  //         <button className="movie__more">Еще</button>
+  //       </>;
+  //     }
+  //
+  //   } else {
+  //
+  //   }
+  // }
+
+  const handlerSearchChange = (e) => {
+    console.log(e.target.value);
+    setQueryString(e.target.value);
+    // showMovies(movieList, isLoaded, isError);
+  }
+
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+    setQuery(queryString);
+    showMovies(movieList, isLoaded, isError);
+  });
+
+
 
   return (
     <div className="movie">
@@ -64,8 +133,8 @@ function Movies(props) {
         showModalMenu = { showModalMenu }
       />
       <div className="movie__search search">
-        <form className="search__form" action="#">
-          <input type="text" className="search__query focus" placeholder="Фильм" name="query" />
+        <form className="search__form" action="#" onSubmit={onSubmit}>
+          <input type="text" className="search__query focus" placeholder="Фильм" name="query" onChange={handlerSearchChange}/>
           <button type="submit" className="search__submit focus"></button>
         </form>
         <div className="search__toggle-wrap">
@@ -77,7 +146,7 @@ function Movies(props) {
       </div>
 
       <div className="movie__wrap">
-        { showMovies(isLoaded, isError) }
+        { showMovies(movieList, isLoaded, isError) }
       </div>
 
       <Footer />
