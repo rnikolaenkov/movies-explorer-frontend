@@ -29,18 +29,18 @@ function SavedMovies(props) {
 
       <div className="movie__wrap">
         <div className="card-list">
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
-          <Movie />
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
+          {/*<Movie />*/}
         </div>
         <button className="movie__more">Еще</button>
       </div>
