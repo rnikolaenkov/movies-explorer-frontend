@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import './vendor/fonts.css';
 import './App.css';
@@ -13,11 +13,19 @@ import Movies from "./components/Movies/Movies";
 import SavedMovies from "./components/SavedMovies/SavedMovies";
 import {CurrentUserContext} from './contexts/CurrentUserContext';
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ModalErrorMsg from "./components/ModalErrorMsg/ModalErrorMsg";
+import ModalSuccessMsg from "./components/ModalSuccessMsg/ModalSuccessMsg";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isOpenModalMenu, setIsOpenModalMenu] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isOpenError, setIsOpenError] = React.useState(false);
+  const [isOpenSuccess, setIsOpenSuccess] = React.useState(false);
+
+  useEffect(() => {
+
+  })
 
   const handlerShowMenu = () => {
     setIsOpenModalMenu(true);
@@ -25,6 +33,20 @@ function App() {
 
   const handlerCloseMenu = () => {
     setIsOpenModalMenu(false);
+  }
+
+  function showModalErrorMsg() {
+    setIsOpenError(true);
+  }
+  function showModalSuccessMsg() {
+    setIsOpenSuccess(true);
+  }
+
+
+  function closeModal()
+  {
+    setIsOpenError(false);
+    setIsOpenSuccess(false);
   }
 
   React.useEffect(() => {
@@ -46,7 +68,7 @@ function App() {
         <Route
           path="/signup"
         >
-          <Register />
+          <Register showModalErrorMsg={showModalErrorMsg} showModalSuccessMsg={showModalSuccessMsg} />
         </Route>
 
         <Route
@@ -90,6 +112,10 @@ function App() {
         isOpenModalMenu = { isOpenModalMenu }
         closeModalMenu = { handlerCloseMenu }
       />
+
+      <ModalErrorMsg isOpenError={isOpenError} close={ closeModal } />
+      <ModalSuccessMsg isOpenSuccess={isOpenSuccess} close={ closeModal } />
+
     </CurrentUserContext.Provider>
   );
 }

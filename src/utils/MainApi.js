@@ -1,10 +1,22 @@
-import config from './config';
+import {apiConfig} from "./config";
 
-function register(email, password, name) {
-  const url = config.api + '/signup';
-  console.log(url);
+export function register(email, password, name) {
+  const url = apiConfig.api + '/signup';
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({email, password, name})
+  }).then((res) => {
+    if(res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  })
 }
 
-module.exports = {
-  register,
+export function login(email, password) {
+  const url = apiConfig.api + '/signin';
+  console.log(url);
 }

@@ -5,8 +5,9 @@ import AuthForm from "../AuthForm/AuthForm";
 import Logo from "../Logo/Logo";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
 import {Link} from "react-router-dom";
+import {register}  from "../../utils/MainApi";
 
-function Register() {
+function Register(props) {
   const [name, setName] = useState('');
   const [errName, setErrName] = useState(false);
   const [email, setEmail] = useState('');
@@ -14,6 +15,9 @@ function Register() {
   const [password, setPassword] = useState('');
   const [errPassword, setErrPassword] = useState(false);
   const [btnDisable, setBtnDisable] = useState(true);
+  // const [type, setType] = useState('error');
+  // const [show, setShow] = useState(false);
+  // const [msg, setMsg] = useState('');
 
   useEffect(() => {
     if (errName && errEmail && errPassword) {
@@ -55,6 +59,13 @@ function Register() {
 
   function handleRegisterSubmit(e) {
     e.preventDefault();
+    register(email, password, name)
+      .then((data) => {
+        props.showModalSuccessMsg();
+      })
+      .catch((err) => {
+        props.showModalErrorMsg();
+      });
   }
 
   function checkBtnDisable(btnDisable) {
@@ -84,15 +95,16 @@ function Register() {
         </div>
         <ErrorLabel message="Что-то пошло не так. Пароль дожен содержать минимум 6 символов." errShow={!errPassword} />
 
+
+        <ul className="auth__nav">
+          <li className="auth__nav-item">
+            <button className="auth__btn" disabled={checkBtnDisable(btnDisable)}>Зарегистрироваться</button>
+          </li>
+          <li className="auth__nav-item">
+            <span className="auth__text">Уже зарегистрированы?<Link to="/signin" className="auth__link focus">Войти</Link></span>
+          </li>
+        </ul>
       </form>
-      <ul className="auth__nav">
-        <li className="auth__nav-item">
-          <button className="auth__btn" disabled={checkBtnDisable(btnDisable)}>Зарегистрироваться</button>
-        </li>
-        <li className="auth__nav-item">
-          <span className="auth__text">Уже зарегистрированы?<Link to="/signin" className="auth__link focus">Войти</Link></span>
-        </li>
-      </ul>
     </AuthForm>
   );
 }
