@@ -4,10 +4,11 @@ import './Register.css';
 import AuthForm from "../AuthForm/AuthForm";
 import Logo from "../Logo/Logo";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {register}  from "../../utils/MainApi";
 
 function Register(props) {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [errName, setErrName] = useState(false);
   const [email, setEmail] = useState('');
@@ -15,9 +16,10 @@ function Register(props) {
   const [password, setPassword] = useState('');
   const [errPassword, setErrPassword] = useState(false);
   const [btnDisable, setBtnDisable] = useState(true);
-  // const [type, setType] = useState('error');
-  // const [show, setShow] = useState(false);
-  // const [msg, setMsg] = useState('');
+
+  if (props.isLogin) {
+    history.push('/movies');
+  }
 
   useEffect(() => {
     if (errName && errEmail && errPassword) {
@@ -61,7 +63,9 @@ function Register(props) {
     e.preventDefault();
     register(email, password, name)
       .then((data) => {
-        props.showModalSuccessMsg();
+        const message = 'Вы успешно зарегистрировались';
+        props.showModalSuccessMsg(message);
+        setTimeout(() => {props.handleLoginSubmit(email, password)}, 1000);
       })
       .catch((err) => {
         props.showModalErrorMsg();

@@ -15,43 +15,100 @@ import {CurrentUserContext} from './contexts/CurrentUserContext';
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import ModalErrorMsg from "./components/ModalErrorMsg/ModalErrorMsg";
 import ModalSuccessMsg from "./components/ModalSuccessMsg/ModalSuccessMsg";
+import {login, checkToken as apiCheckToken, editProfile} from './utils/MainApi';
 
 function App() {
+  const history = useHistory();
   const [isLogin, setIsLogin] = useState(false);
   const [isOpenModalMenu, setIsOpenModalMenu] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isOpenError, setIsOpenError] = React.useState(false);
   const [isOpenSuccess, setIsOpenSuccess] = React.useState(false);
+  const [message, setMessage] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    checkToken();
+  }, []);
 
-  })
-
-  const handlerShowMenu = () => {
+  const handleShowMenu = () => {
     setIsOpenModalMenu(true);
   }
-
-  const handlerCloseMenu = () => {
+  const handleCloseMenu = () => {
     setIsOpenModalMenu(false);
   }
 
   function showModalErrorMsg() {
     setIsOpenError(true);
   }
-  function showModalSuccessMsg() {
+  function showModalSuccessMsg(message) {
+    setMessage(message);
     setIsOpenSuccess(true);
   }
-
-
-  function closeModal()
-  {
+  function closeModal() {
     setIsOpenError(false);
     setIsOpenSuccess(false);
   }
 
-  React.useEffect(() => {
-    setIsOpenModalMenu(false);
-  }, [])
+  function handleLoginSubmit (email, password) {
+    login(email, password)
+      .then(data => {
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setIsLogin(true);
+          setIsOpenSuccess(false);
+          checkToken();
+          history.push('/movies');
+        } else {
+          localStorage.removeItem('jwt');
+        }
+      })
+      .catch(err => {
+        setIsOpenError(true);
+      });
+  }
+
+  function checkToken() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      apiCheckToken(jwt)
+        .then(data => {
+          if (data.user) {
+            setCurrentUser(data);
+            setIsLogin(true);
+          } else {
+            localStorage.removeItem('jwt');
+            setIsLogin(false);
+          }
+        })
+        .catch(err => {
+          localStorage.removeItem('jwt');
+          setIsLogin(false);
+        });
+    }
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('jwt');
+    setIsLogin(false);
+    history.push('/');
+  }
+
+  function handleEditProfile(email, name) {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      editProfile(email, name, token)
+        .then(data => {
+          setCurrentUser(data);
+          setMessage('Данные сохранены');
+          setIsOpenSuccess(true);
+        })
+        .catch(err => {
+          setIsOpenError(true);
+        });
+    } else {
+      setIsLogin(false);
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -62,42 +119,44 @@ function App() {
         >
           <Main
             isLogin={ isLogin }
-            showModalMenu = { handlerShowMenu }
+            showModalMenu = { handleShowMenu }
           />
         </Route>
         <Route
           path="/signup"
         >
-          <Register showModalErrorMsg={showModalErrorMsg} showModalSuccessMsg={showModalSuccessMsg} />
+          <Register showModalErrorMsg={showModalErrorMsg} showModalSuccessMsg={showModalSuccessMsg} isLogin={ isLogin } handleLoginSubmit={handleLoginSubmit}/>
         </Route>
 
         <Route
           path="/signin"
         >
-          <Login />
+          <Login onSubmit = {handleLoginSubmit} isLogin={ isLogin }/>
         </Route>
 
         <ProtectedRoute
           path="/profile"
           exact={true}
-          isLogin={isLogin}
-          showModalMenu = { handlerShowMenu }
+          isLogin={ isLogin }
+          showModalMenu = { handleShowMenu }
           component={Profile}
+          logout = {handleLogout}
+          onSubmit = {handleEditProfile}
         />
 
         <ProtectedRoute
           path="/movies"
           exact={true}
-          isLogin={isLogin}
-          showModalMenu = { handlerShowMenu }
+          isLogin={ isLogin }
+          showModalMenu = { handleShowMenu }
           component={Movies}
         />
 
         <ProtectedRoute
           path="/movies-save"
           exact={true}
-          isLogin={isLogin}
-          showModalMenu = { handlerShowMenu }
+          isLogin={ isLogin }
+          showModalMenu = { handleShowMenu }
           component={SavedMovies}
         />
 
@@ -110,11 +169,11 @@ function App() {
 
       <ModalMenu
         isOpenModalMenu = { isOpenModalMenu }
-        closeModalMenu = { handlerCloseMenu }
+        closeModalMenu = { handleCloseMenu }
       />
 
       <ModalErrorMsg isOpenError={isOpenError} close={ closeModal } />
-      <ModalSuccessMsg isOpenSuccess={isOpenSuccess} close={ closeModal } />
+      <ModalSuccessMsg isOpenSuccess={isOpenSuccess} close={ closeModal } message={message}/>
 
     </CurrentUserContext.Provider>
   );

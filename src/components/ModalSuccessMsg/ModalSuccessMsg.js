@@ -17,7 +17,7 @@ function ModalSuccessMsg(props) {
       <div className="modal-container__window modal-container__window_success">
         <button className="modal-container__btn-close" onClick={closeBtn}></button>
         <img className="modal-container__success-img" alt="error" src={image}/>
-        Вы успешно зарегистрировались
+        {props.message}
       </div>
     </div>
   )
