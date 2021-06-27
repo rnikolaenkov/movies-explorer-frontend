@@ -9,8 +9,6 @@ function Profile(props) {
   const { isLogin, showModalMenu } = props;
   const currentUser = React.useContext(CurrentUserContext);
 
-  console.log(currentUser);
-
   const [name, setName] = useState(currentUser.user.name);
   const [email, setEmail] = useState(currentUser.user.email);
   const [btnDisable, setBtnDisable] = useState(true);

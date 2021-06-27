@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import './vendor/fonts.css';
 import './App.css';
@@ -149,7 +149,7 @@ function App() {
           exact={true}
           isLogin={ isLogin }
           showModalMenu = { handleShowMenu }
-          component={Movies}
+          component={ Movies }
         />
 
         <ProtectedRoute
@@ -167,10 +167,7 @@ function App() {
         </Route>
       </Switch>
 
-      <ModalMenu
-        isOpenModalMenu = { isOpenModalMenu }
-        closeModalMenu = { handleCloseMenu }
-      />
+      <ModalMenu isOpenModalMenu = { isOpenModalMenu } closeModalMenu = { handleCloseMenu } />
 
       <ModalErrorMsg isOpenError={isOpenError} close={ closeModal } />
       <ModalSuccessMsg isOpenSuccess={isOpenSuccess} close={ closeModal } message={message}/>

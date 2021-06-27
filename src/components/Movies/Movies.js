@@ -29,7 +29,6 @@ function Movies(props) {
         setMovieList(res);
         setIsLoaded(true);
       }).catch((err) => {
-        console.log(err );
         setIsLoaded(true);
         setIsError(true);
       });
@@ -55,8 +54,8 @@ function Movies(props) {
       return movieList.map((movie) => {
 
         if (movie['nameRU'].indexOf(query) !== -1) {
-          
-          return <Movie movie={movie} />
+
+          return <Movie movie={movie} key={movie.id}/>
         }
       });
     } else {
@@ -65,7 +64,6 @@ function Movies(props) {
   };
 
   const showMovies = (movieList, isLoaded, isError) => {
-    console.log('123', isLoaded);
     if (isLoaded) {
       if (isError) {
         return <ErrorMsg message="Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз" />;
@@ -112,7 +110,6 @@ function Movies(props) {
   // }
 
   const handlerSearchChange = (e) => {
-    console.log(e.target.value);
     setQueryString(e.target.value);
     // showMovies(movieList, isLoaded, isError);
   }
