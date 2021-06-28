@@ -149,6 +149,8 @@ function App() {
           exact={true}
           isLogin={ isLogin }
           showModalMenu = { handleShowMenu }
+          showModalSuccessMsg = {showModalSuccessMsg}
+          showModalErrorMsg = {showModalErrorMsg}
           component={ Movies }
         />
 
@@ -157,6 +159,8 @@ function App() {
           exact={true}
           isLogin={ isLogin }
           showModalMenu = { handleShowMenu }
+          showModalSuccessMsg = {showModalSuccessMsg}
+          showModalErrorMsg = {showModalErrorMsg}
           component={SavedMovies}
         />
 
