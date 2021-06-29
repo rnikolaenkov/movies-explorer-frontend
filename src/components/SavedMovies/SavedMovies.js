@@ -37,6 +37,10 @@ function SavedMovies(props) {
   }, [searchMovieList.length]);
 
   useEffect(() => {
+    getSearchMovieList(queryString, isShort, savedMovieList);
+  },[isShort]);
+
+  useEffect(() => {
     if (searchMovieList.length === 0) {
       setIsError(true);
       setMsgError('Необходимо задать поиск');
@@ -174,7 +178,7 @@ function SavedMovies(props) {
     return searchMovieList.map(card => {
       if(i <= showCount) {
         i++;
-        return <Movie movie={card} key={card.id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} removeSavedList={handlerRemoveSavedList} saved='mylist'/>
+        return <Movie movie={card} key={card._id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} removeSavedList={handlerRemoveSavedList} saved='mylist'/>
       }
     });
   }

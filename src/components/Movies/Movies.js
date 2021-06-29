@@ -37,6 +37,10 @@ function Movies(props) {
   }, []);
 
   useEffect(() => {
+    getSearchMovieList(queryString, isShort, movieList);
+  },[isShort]);
+
+  useEffect(() => {
     if (movieList.length === 0) {
       getMovies().then((res) => {
         localStorage.setItem('movies', JSON.stringify(res));
