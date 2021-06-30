@@ -11,6 +11,7 @@ function Login(props) {
   const [email, setEmail] = useState('');
   const [errEmail, setErrEmail] = useState(false);
   const [password, setPassword] = useState('');
+  const [errPassword, setErrPassword] = useState(false);
   const [btnDisable, setBtnDisable] = useState(true);
 
   if (props.isLogin) {
@@ -18,12 +19,12 @@ function Login(props) {
   }
 
   useEffect(() => {
-    if (errEmail) {
+    if (errEmail && errPassword) {
       setBtnDisable(false);
     } else {
       setBtnDisable(true);
     }
-  }, [errEmail]);
+  }, [errEmail, errPassword]);
 
   function changeEmail(e){
     const val = e.target.value;
@@ -36,7 +37,13 @@ function Login(props) {
   }
 
   function changePassword(e){
-    setPassword(e.target.value);
+    const val = e.target.value;
+    setPassword(val);
+    if (val.length >= 1) {
+      setErrPassword(true);
+    } else {
+      setErrPassword(false);
+    }
   }
 
   function onSubmit(e) {
