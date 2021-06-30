@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './Movie.css';
 import BtnSaved from "../BtnSaved/BtnSaved";
 import BtnSave from "../BtnSave/BtnSave";
@@ -7,32 +7,15 @@ import {apiConfig} from "../../utils/config";
 import {addSavedMovie} from "../../utils/MainApi";
 
 function Movie(props) {
-  const { movie, showModalSuccessMsg, showModalErrorMsg } = props;
+  const { movie, showModalSuccessMsg, showModalErrorMsg, addSavedList, saved } = props;
 
-  const [saved, setSaved] = useState(props.saved);
+  const [curSaved, setCurSaved] = useState(saved);
 
-  function addSavedList() {
-
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      addSavedMovie(token, movie)
-        .then(data => {
-          setSaved('saved');
-          showModalSuccessMsg('Фильм успешно сохранен');
-        })
-        .catch(err => {
-          setSaved('nosaved');
-          showModalErrorMsg();
-        })
-    }
+  function handleSavedList() {
+    addSavedList(movie);
   }
 
   function removeSavedList() {
-    props.removeSavedList(movie);
-  }
-
-  function removeSavedListFromMovie() {
-    setSaved('nosaved');
     props.removeSavedList(movie);
   }
 
@@ -45,9 +28,9 @@ function Movie(props) {
 
   function renderButtons() {
     if (saved === 'saved') {
-      return <BtnSaved removeSavedList={removeSavedListFromMovie}/>
+      return <BtnSaved removeSavedList={removeSavedList}/>
     } else if (saved === 'nosaved') {
-      return <BtnSave addSavedList={addSavedList} />
+      return <BtnSave addSavedList={handleSavedList} />
     } else if (saved === 'mylist') {
       return <BtnRemove removeSavedList={removeSavedList}/>
     }

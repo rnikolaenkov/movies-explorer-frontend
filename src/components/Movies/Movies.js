@@ -6,115 +6,168 @@ import Movie from "../Movie/Movie";
 import Preloader from "../Preloader/Preloader";
 import getMovies from "../../utils/MoviesApi";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import {getSavedMovie, removeSavedMovie} from "../../utils/MainApi";
+import {addSavedMovie, getSavedMovie, removeSavedMovie} from "../../utils/MainApi";
 
 function Movies(props) {
   const { isLogin, showModalMenu, showModalSuccessMsg, showModalErrorMsg } = props;
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const [movieList, setMovieList] = useState(JSON.parse(localStorage.getItem('movies')) || []);
-  const [savedMovieList, setSavedMovieList] = useState([]);
-
-  const [isShort, setIsShort] = useState(false);
+  const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('movies')) || []);
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
+  const [searchMovies, setSearchMovies] = useState(JSON.parse(localStorage.getItem('searchMovies')) || []);
+  const [isShortFilm, setIsShortFilm] = useState(false);
   const [queryString, setQueryString] = useState('');
   const [showCount, setShowCount] = useState(12);
   const [nextCount, setNextCount] = useState(3);
-  // const [totalSearchMovie, setTotalSearchMovie] = useState(0);
-  const [btnNextDisable, setBtnNextDisable] = useState(false)
-
-  const [searchMovieList, setSearchMovieList] = useState([]);
-
+  const [btnNextDisable, setBtnNextDisable] = useState(true);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     handleResize();
-    getSavedMovieList();
     return function cleanup() {
       window.removeEventListener('resize', handleResize)
+    }
+  },[]);
+
+  useEffect(() => {
+    if (movies.length === 0) {
+      getMoviesFromRemote();
+    } else {
+      setLoaded(true);
     }
   }, []);
 
   useEffect(() => {
-    getSearchMovieList(queryString, isShort, movieList);
-  },[isShort]);
+    getSavedMovies();
+  }, []);
 
   useEffect(() => {
-    if (movieList.length === 0) {
-      getMovies().then((res) => {
-        localStorage.setItem('movies', JSON.stringify(res));
-        setMovieList(res);
-        setIsLoaded(true);
-      }).catch((err) => {
-        setIsLoaded(true);
-        setIsError(true);
-        setMsgError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-      });
+    if (searchMovies.length === 0 && queryString.length === 0) {
+      setHasError(true);
+      setMsgError('Необходимо ввести запрос');
     } else {
-      setIsLoaded(true);
+      setHasError(false);
+      setMsgError('');
     }
-
-    if (searchMovieList.length === 0) {
-      setIsError(true);
-      setMsgError('Необходимо задать поиск');
-    }
-  }, [movieList, searchMovieList]);
+  },[queryString, searchMovies]);
 
   useEffect(() => {
-    if (showCount >= searchMovieList.length) {
+    if (showCount >= searchMovies.length) {
       setBtnNextDisable(true);
     } else {
       setBtnNextDisable(false);
     }
-  }, [showCount, searchMovieList]);
+  }, [showCount, searchMovies]);
 
-  function getSavedMovieList() {
+
+
+  function changeSearch(e) {
+    setQueryString(e.target.value);
+  }
+
+  function changeCheckbox(e) {
+    if(e.target.checked) {
+      setIsShortFilm(true);
+    } else {
+      setIsShortFilm(false);
+    }
+  }
+
+  function getSavedMovies() {
     const token = localStorage.getItem('jwt');
     if (token) {
       getSavedMovie(token)
         .then(data => {
-          setSavedMovieList(data.movieList);
+          setSavedMovies(data.movieList);
+          localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         })
         .catch(err => {
-          setIsError(true);
+          setHasError(true);
           setMsgError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
         });
     }
-
   }
 
-  function getSearchMovieList(queryString, isShort, movieList) {
-    let searchMovieList = [];
-    if (queryString.length !== 0) {
-      movieList.map((movie) => {
-        if (movie['nameRU'].indexOf(queryString) !== -1) {
-          if (isShort) {
-            if (movie['duration'] <= 40) {
-              searchMovieList.push(movie);
-            }
-          } else {
-            searchMovieList.push(movie);
-          }
-        }
-      });
-    } else {
-      searchMovieList = [];
-    }
+  function getMoviesFromRemote() {
+    getMovies().then((res) => {
+      localStorage.setItem('movies', JSON.stringify(res));
+      setMovies(res);
+      setLoaded(true);
+    }).catch((err) => {
+      setLoaded(true);
+      setHasError(true);
+      setMsgError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+    });
+  }
 
-    if (searchMovieList.length === 0) {
-      setIsError(true);
-      setMsgError('Ничего не найдено')
+  function getSearchMovies(queryString, movies) {
+    const searchMoviesArray = [];
+    movies.map((movie) => {
+      if (movie['nameRU'].indexOf(queryString) !== -1) {
+        searchMoviesArray.push(movie);
+      }
+    })
+
+    setSearchMovies(searchMoviesArray);
+    localStorage.setItem('searchMovies', JSON.stringify(searchMoviesArray));
+  }
+
+  function getCount() {
+    const width = window.innerWidth;
+    if (width >= 1280) {
+      setShowCount(12);
+      setNextCount(3);
+    } else if (width >= 768 && width < 1280) {
+      setShowCount(8);
+      setNextCount(2);
     } else {
-      setSearchMovieList(searchMovieList);
-      setIsLoaded(true);
-      setIsError(false);
+      setShowCount(5);
+      setNextCount(2);
     }
+  }
+
+  function handleResize() {
+    setTimeout(() => {
+      getCount();
+    }, 1000);
   }
 
   function handleSearch(e) {
     e.preventDefault();
-    getSearchMovieList(queryString, isShort, movieList);
+    getSearchMovies(queryString, movies);
+    renderMovieList(searchMovies, loaded, hasError, isShortFilm);
+  }
+
+  function handleRemoveSavedList(movie) {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      removeSavedMovie(token, movie.id)
+        .then(data => {
+          showModalSuccessMsg('Фильм успешно удален');
+          getSavedMovies();
+
+        })
+        .catch(err => {
+          showModalErrorMsg();
+        })
+    }
+  }
+
+  function addSavedList(movie) {
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      addSavedMovie(token, movie)
+        .then(data => {
+          getSavedMovies();
+          showModalSuccessMsg('Фильм успешно сохранен');
+        })
+        .catch(err => {
+          showModalErrorMsg();
+        })
+    }
   }
 
   function handleNext(e) {
@@ -122,92 +175,52 @@ function Movies(props) {
     setShowCount(showCount + nextCount);
   }
 
-  function handleResize() {
-    setTimeout(() => {
 
-      const width = window.innerWidth;
-      if (width >= 1280) {
-        setShowCount(12);
-        setNextCount(3);
-      } else if (width >= 768 && width < 1280) {
-        setShowCount(8);
-        setNextCount(2);
-      } else {
-        setShowCount(5);
-        setNextCount(2);
-      }
-    }, 1000);
+  function renderMovieList(searchMovieList, loaded, hasError, isShortFilm) {
 
-  }
-
-  function handleRemoveSavedList(movie) {
-    const token = localStorage.getItem('jwt');
-
-
-    if (token) {
-      removeSavedMovie(token, movie.id)
-        .then(data => {
-          console.log(data);
-          showModalSuccessMsg('Фильм успешно удален');
-          let newSavedMovieList = savedMovieList.filter(item => item._id !== movie._id);
-          console.log(newSavedMovieList);
-          setSavedMovieList(newSavedMovieList);
-        })
-        .catch(err => {
-          showModalErrorMsg();
-        })
-    }
-
-
-  }
-
-  function searchChange(e) {
-    setQueryString(e.target.value);
-  }
-
-  function checkboxChange(e) {
-    if(e.target.checked) {
-      setIsShort(true);
-    } else {
-      setIsShort(false);
-    }
-  }
-
-  function renderMovieList(searchMovieList, isLoaded, isError) {
-    if (isLoaded) {
-      if (isError) {
+    if (loaded) {
+      if (hasError) {
         return <ErrorMsg message={msgError}/>
       }
-      return renderMovieCard(searchMovieList);
+
+      let i = 1;
+      return searchMovieList.map((movie) => {
+        if(i <= showCount) {
+          if (isShortFilm) {
+            if (movie.duration <= 40) {
+              i++;
+              return renderCard(movie);
+            }
+          } else {
+            i++;
+            return renderCard(movie);
+          }
+        }
+      });
     } else {
       return <Preloader />
     }
   }
 
-  function renderMovieCard(searchMovieList) {
-    let i = 1;
+  function renderCard(movie) {
 
-    return searchMovieList.map(card => {
-      if(i <= showCount) {
-        i++;
-        const res = savedMovieList.find((element, index)=> {
-          if (element.movieId === card.id) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-
-        let saved = true;
-        if (res === undefined) {
-          saved = 'nosaved'
-        } else {
-          saved = 'saved';
-        }
-
-        return <Movie movie={card} key={card.id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} saved={saved} removeSavedList={handleRemoveSavedList}/>
+    let saved = 'nosaved';
+    savedMovies.forEach((sm) => {
+      if (sm.movieId === movie.id) {
+        saved = 'saved';
+        return;
       }
-    });
+    })
+
+    return <Movie
+      movie={movie}
+      key={movie.id}
+      showModalSuccessMsg={showModalSuccessMsg}
+      showModalErrorMsg={showModalErrorMsg}
+      saved={saved}
+      removeSavedList={handleRemoveSavedList}
+      addSavedList = {addSavedList}
+    />
   }
 
   return (
@@ -218,13 +231,13 @@ function Movies(props) {
         showModalMenu = { showModalMenu }
       />
       <div className="movie__search search">
-        <form className="search__form" action="#" onSubmit={handleSearch}>
-          <input type="text" className="search__query focus" placeholder="Фильм" name="query" value={queryString} onChange={searchChange}/>
-          <button type="submit" className="search__submit focus"></button>
+        <form className="search__form" action="#" >
+          <input type="text" className="search__query focus" placeholder="Фильм" name="query" value={queryString} onChange={changeSearch}/>
+          <button type="submit" className="search__submit focus" onClick={handleSearch}></button>
         </form>
         <div className="search__toggle-wrap">
           <div className="search__toggle">
-            <input type="checkbox" className="search__short-film" id="short-film" onChange={checkboxChange}/>
+            <input type="checkbox" className="search__short-film" id="short-film" onChange={changeCheckbox}/>
             <label htmlFor="short-film" className="search__label">Короткометражки</label>
           </div>
         </div>
@@ -232,14 +245,14 @@ function Movies(props) {
 
       <div className="movie__wrap">
         <div className="card-list">
-          {renderMovieList(searchMovieList, isLoaded, isError)}
+          {renderMovieList(searchMovies, loaded, hasError, isShortFilm)}
         </div>
-        <button className="movie__more" onClick={handleNext} disabled={(btnNextDisable?'disabled':'')}>Еще</button>
       </div>
 
+      <button className="movie__more"  disabled={(btnNextDisable?'disabled':'')} onClick={handleNext}>Еще</button>
       <Footer />
     </div>
-  );
+  )
 }
 
 export default Movies;
