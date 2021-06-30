@@ -6,7 +6,7 @@ import Movie from "../Movie/Movie";
 import Preloader from "../Preloader/Preloader";
 import getMovies from "../../utils/MoviesApi";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import {getSavedMovie} from "../../utils/MainApi";
+import {getSavedMovie, removeSavedMovie} from "../../utils/MainApi";
 
 function Movies(props) {
   const { isLogin, showModalMenu, showModalSuccessMsg, showModalErrorMsg } = props;
@@ -140,6 +140,27 @@ function Movies(props) {
 
   }
 
+  function handleRemoveSavedList(movie) {
+    const token = localStorage.getItem('jwt');
+
+
+    if (token) {
+      removeSavedMovie(token, movie.id)
+        .then(data => {
+          console.log(data);
+          showModalSuccessMsg('Фильм успешно удален');
+          let newSavedMovieList = savedMovieList.filter(item => item._id !== movie._id);
+          console.log(newSavedMovieList);
+          setSavedMovieList(newSavedMovieList);
+        })
+        .catch(err => {
+          showModalErrorMsg();
+        })
+    }
+
+
+  }
+
   function searchChange(e) {
     setQueryString(e.target.value);
   }
@@ -184,7 +205,7 @@ function Movies(props) {
           saved = 'saved';
         }
 
-        return <Movie movie={card} key={card.id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} saved={saved}/>
+        return <Movie movie={card} key={card.id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} saved={saved} removeSavedList={handleRemoveSavedList}/>
       }
     });
   }

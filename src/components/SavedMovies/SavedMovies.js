@@ -119,7 +119,7 @@ function SavedMovies(props) {
   function handlerRemoveSavedList(movie) {
     const token = localStorage.getItem('jwt');
     if (token) {
-      removeSavedMovie(token, movie._id)
+      removeSavedMovie(token, movie.movieId)
         .then(data => {
           showModalSuccessMsg('Фильм успешно удален');
           let newSavedMovieList = savedMovieList.filter(item => item._id !== movie._id);
@@ -175,10 +175,10 @@ function SavedMovies(props) {
   function renderMovieCard(searchMovieList) {
     let i = 1;
 
-    return searchMovieList.map(card => {
+    return searchMovieList.map(movie => {
       if(i <= showCount) {
         i++;
-        return <Movie movie={card} key={card._id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} removeSavedList={handlerRemoveSavedList} saved='mylist'/>
+        return <Movie movie={movie} key={movie._id} showModalSuccessMsg={showModalSuccessMsg} showModalErrorMsg={showModalErrorMsg} removeSavedList={handlerRemoveSavedList} saved='mylist'/>
       }
     });
   }

@@ -1,9 +1,16 @@
 import React from "react";
 import './BtnSaved.css';
 
-function BtnSaved() {
+function BtnSaved(props) {
+
+  function removeSavedList(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    props.removeSavedList();
+  }
+
   return (
-    <button className="card__save"></button>
+    <button className="card__save" onClick={removeSavedList}></button>
   );
 }
 

@@ -31,6 +31,11 @@ function Movie(props) {
     props.removeSavedList(movie);
   }
 
+  function removeSavedListFromMovie() {
+    setSaved('nosaved');
+    props.removeSavedList(movie);
+  }
+
   function getDuration(minutes) {
     const time = parseInt(minutes);
     const hour = Math.trunc(time / 60);
@@ -40,7 +45,7 @@ function Movie(props) {
 
   function renderButtons() {
     if (saved === 'saved') {
-      return <BtnSaved />
+      return <BtnSaved removeSavedList={removeSavedListFromMovie}/>
     } else if (saved === 'nosaved') {
       return <BtnSave addSavedList={addSavedList} />
     } else if (saved === 'mylist') {
