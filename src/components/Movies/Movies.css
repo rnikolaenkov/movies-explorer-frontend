@@ -139,7 +139,13 @@
     cursor: pointer;
     transition: 0.5s;
 }
+
 .movie__more:hover {
+    opacity: 0.5;
+}
+
+.movie__more:disabled {
+    cursor: auto;
     opacity: 0.5;
 }
 
